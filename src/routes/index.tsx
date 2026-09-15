@@ -165,7 +165,7 @@ function Index() {
             </div>
             <form onSubmit={checkDomain} className="mt-7">
               <div className="relative">
-                <Input value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="Enter domain, e.g. project.oxyn" className="h-13 border-border/70 bg-background/50 pr-28 pl-4" aria-label="Domain name" />
+                <Input id="domain-search-input" name="domain" value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="Enter domain, e.g. project.oxyn" className="h-13 border-border/70 bg-background/50 pr-28 pl-4" aria-label="Domain name" />
                 <Button type="submit" variant="glow" size="sm" className="absolute right-2 top-1/2 h-9 -translate-y-1/2 px-4">Check <ChevronRight /></Button>
               </div>
             </form>
@@ -233,22 +233,22 @@ function Index() {
         <TabsList className="grid w-full grid-cols-2"><TabsTrigger value="login">Log In</TabsTrigger><TabsTrigger value="signup">Sign Up</TabsTrigger></TabsList>
         <TabsContent value="login">
           <form onSubmit={submitAuth} className="mt-5 space-y-4">
-            <label className="block text-sm font-medium">Email<Input required type="email" className="mt-2 h-11" placeholder="alex@company.com" /></label>
-            <label className="block text-sm font-medium">Password<Input required type="password" minLength={6} className="mt-2 h-11" placeholder="••••••••" /></label>
+            <label className="block text-sm font-medium">Email<Input id="login-email" name="login-email" autoComplete="email" required type="email" className="mt-2 h-11" placeholder="alex@company.com" /></label>
+            <label className="block text-sm font-medium">Password<Input id="login-password" name="login-password" autoComplete="current-password" required type="password" minLength={6} className="mt-2 h-11" placeholder="••••••••" /></label>
             <Button type="submit" variant="glow" className="h-11 w-full">Log In <ArrowRight /></Button>
           </form>
         </TabsContent>
         <TabsContent value="signup">
           <form onSubmit={submitAuth} className="mt-5 space-y-4">
-            <label className="block text-sm font-medium">Full name<Input required minLength={2} className="mt-2 h-11" placeholder="Alex Morgan" /></label>
-            <label className="block text-sm font-medium">Email<Input required type="email" className="mt-2 h-11" placeholder="alex@company.com" /></label>
-            <label className="block text-sm font-medium">Password<Input required type="password" minLength={6} className="mt-2 h-11" placeholder="••••••••" /></label>
+            <label className="block text-sm font-medium">Full name<Input id="signup-name" name="signup-name" autoComplete="name" required minLength={2} className="mt-2 h-11" placeholder="Alex Morgan" /></label>
+            <label className="block text-sm font-medium">Email<Input id="signup-email" name="signup-email" autoComplete="email" required type="email" className="mt-2 h-11" placeholder="alex@company.com" /></label>
+            <label className="block text-sm font-medium">Password<Input id="signup-password" name="signup-password" autoComplete="new-password" required type="password" minLength={6} className="mt-2 h-11" placeholder="••••••••" /></label>
             <Button type="submit" variant="glow" className="h-11 w-full">Create Account <ArrowRight /></Button>
           </form>
         </TabsContent>
       </Tabs>
     </DialogContent></Dialog>
 
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}><DialogContent className="glass-panel max-w-md border-primary/20"><DialogHeader><DialogTitle className="text-2xl">Launch with OxynHost</DialogTitle><DialogDescription>Tell us where to reach you. Our team will respond shortly.</DialogDescription></DialogHeader><form onSubmit={submitOrder} className="mt-3 space-y-5"><label className="block text-sm font-medium">Selected plan<Select value={selectedPlan} onValueChange={(value) => setSelectedPlan(value as PlanName)}><SelectTrigger className="mt-2 h-11"><SelectValue/></SelectTrigger><SelectContent>{plans.map(p => <SelectItem key={p.name} value={p.name}>{p.name}</SelectItem>)}</SelectContent></Select></label><label className="block text-sm font-medium">Customer name<Input required minLength={2} maxLength={100} value={name} onChange={(e) => setName(e.target.value)} className="mt-2 h-11" placeholder="Alex Morgan" /></label><label className="block text-sm font-medium">Email or Telegram username<Input required minLength={3} maxLength={255} value={contact} onChange={(e) => setContact(e.target.value)} className="mt-2 h-11" placeholder="alex@company.com or @alex" /></label><label className="block text-sm font-medium">What is {challenge.a} + {challenge.b}?<Input required inputMode="numeric" pattern="[0-9]*" value={captcha} onChange={(e) => setCaptcha(e.target.value)} className="mt-2 h-11" placeholder="Your answer" /></label><Button type="submit" variant="glow" className="h-11 w-full" disabled={sending}>{sending ? "Sending order..." : "Send Order"} {!sending && <ArrowRight/>}</Button></form></DialogContent></Dialog>
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}><DialogContent className="glass-panel max-w-md border-primary/20"><DialogHeader><DialogTitle className="text-2xl">Launch with OxynHost</DialogTitle><DialogDescription>Tell us where to reach you. Our team will respond shortly.</DialogDescription></DialogHeader><form onSubmit={submitOrder} className="mt-3 space-y-5"><label className="block text-sm font-medium">Selected plan<Select name="order-plan" value={selectedPlan} onValueChange={(value) => setSelectedPlan(value as PlanName)}><SelectTrigger id="order-plan" className="mt-2 h-11"><SelectValue/></SelectTrigger><SelectContent>{plans.map(p => <SelectItem key={p.name} value={p.name}>{p.name}</SelectItem>)}</SelectContent></Select></label><label className="block text-sm font-medium">Customer name<Input id="order-name" name="order-name" autoComplete="name" required minLength={2} maxLength={100} value={name} onChange={(e) => setName(e.target.value)} className="mt-2 h-11" placeholder="Alex Morgan" /></label><label className="block text-sm font-medium">Email or Telegram username<Input id="order-contact" name="order-contact" required minLength={3} maxLength={255} value={contact} onChange={(e) => setContact(e.target.value)} className="mt-2 h-11" placeholder="alex@company.com or @alex" /></label><label className="block text-sm font-medium">What is {challenge.a} + {challenge.b}?<Input id="order-captcha" name="order-captcha" required inputMode="numeric" pattern="[0-9]*" value={captcha} onChange={(e) => setCaptcha(e.target.value)} className="mt-2 h-11" placeholder="Your answer" /></label><Button type="submit" variant="glow" className="h-11 w-full" disabled={sending}>{sending ? "Sending order..." : "Send Order"} {!sending && <ArrowRight/>}</Button></form></DialogContent></Dialog>
   </div>;
 }
